@@ -1,0 +1,469 @@
+"","SPECIES.NAME","freq"
+"1","Red-whiskered Bulbul | Pycnonotus jocosus",0.441292984869326
+"2","White-cheeked Barbet (Small Green Barbet) | Psilopogon viridis",0.40060522696011
+"3","Indian/Eastern Jungle Crow (Large-billed Crow) | Corvus macrorhynchos",0.299752407152682
+"4","Spotted Dove | Streptopelia chinensis",0.28343878954608
+"5","Oriental Magpie-Robin | Copsychus saularis",0.26060522696011
+"6","Greater Racket-tailed Drongo | Dicrurus paradiseus",0.246327372764787
+"7","Red-vented Bulbul | Pycnonotus cafer",0.202475928473177
+"8","Common Tailorbird | Orthotomus sutorius",0.199614855570839
+"9","Greater Coucal | Centropus sinensis",0.197936726272352
+"10","Malabar Whistling-Thrush | Myophonus horsfieldii",0.196726272352132
+"11","Orange Minivet | Pericrocotus flammeus",0.195845942228336
+"12","House Crow | Corvus splendens",0.195570839064649
+"13","Yellow-browed Bulbul | Iole indica",0.195103163686382
+"14","Vernal Hanging-Parrot (Indian Lorikeet) | Loriculus vernalis",0.194277854195323
+"15","Grey Junglefowl | Gallus sonneratii",0.19251719394773
+"16","White-throated Kingfisher | Halcyon smyrnensis",0.185199449793673
+"17","Jungle Myna | Acridotheres fuscus",0.181265474552957
+"18","Purple-rumped Sunbird | Leptocoma zeylonica",0.176451169188446
+"19","Southern Hill Myna | Gracula indica",0.172627235213205
+"20","Common Myna | Acridotheres tristis",0.164704264099037
+"21","Malabar Parakeet (Blue-winged Parakeet) | Psittacula columboides",0.156836313617607
+"22","Common Iora | Aegithina tiphia",0.1539477303989
+"23","Rufous Treepie | Dendrocitta vagabunda",0.140385144429161
+"24","Purple Sunbird | Cinnyris asiaticus",0.140137551581843
+"25","Jungle Babbler | Turdoides striata",0.139449793672627
+"26","Nilgiri Flowerpecker | Dicaeum concolor",0.138927097661623
+"27","Malabar Grey Hornbill | Ocyceros griseus",0.138019257221458
+"28","Crimson-backed Sunbird (Small Sunbird) | Leptocoma minima",0.136478679504814
+"29","Oriental White-eye | Zosterops palpebrosus",0.134718019257221
+"30","Black-rumped Flameback (Lesser Goldenbacked Woodpecker) | Dinopium benghalense",0.134305364511692
+"31","Blyth's Reed-Warbler | Acrocephalus dumetorum",0.1292984869326
+"32","Grey Wagtail | Motacilla cinerea",0.124154057771664
+"33","Crested Serpent-Eagle | Spilornis cheela",0.123493810178817
+"34","Plum-headed Parakeet | Psittacula cyanocephala",0.122640990371389
+"35","Indian Scimitar-Babbler | Pomatorhinus horsfieldii",0.122255845942228
+"36","Bronzed Drongo | Dicrurus aeneus",0.12060522696011
+"37","Black Drongo | Dicrurus macrocercus",0.118569463548831
+"38","Green Bee-eater | Merops orientalis",0.112984869325997
+"39","Indian Pond-Heron | Ardeola grayii",0.110866574965612
+"40","Chestnut-headed Bee-eater | Merops leschenaulti",0.10888583218707
+"41","Malabar Barbet (Crimson-throated Barbet) | Psilopogon malabaricus",0.108005502063274
+"42","Golden-fronted Leafbird (Golden-fronted Chloropsis) | Chloropsis aurifrons",0.106409903713893
+"43","House Sparrow | Passer domesticus",0.104401650618982
+"44","Asian Fairy-bluebird | Irena puella",0.104126547455296
+"45","Ashy Drongo | Dicrurus leucophaeus",0.101458046767538
+"46","Black-hooded Oriole | Oriolus xanthornus",0.0995048143053645
+"47","Pied Bushchat | Saxicola caprata",0.0962585969738652
+"48","Greenish Warbler | Phylloscopus trochiloides",0.095130674002751
+"49","Indian Golden Oriole | Oriolus kundoo",0.0939752407152682
+"50","Indian Peafowl | Pavo cristatus",0.0938651994497937
+"51","Pale-billed Flowerpecker | Dicaeum erythrorhynchos",0.090949105914718
+"52","Little Cormorant | Microcarbo niger",0.0898762035763411
+"53","Coppersmith Barbet | Psilopogon haemacephalus",0.0882806052269601
+"54","Flame-throated Bulbul (Ruby-throated Bulbul) | Pycnonotus gularis",0.0874277854195323
+"55","Velvet-fronted Nuthatch | Sitta frontalis",0.0869325997248968
+"56","Indian Swiftlet | Aerodramus unicolor",0.0868225584594223
+"57","Long-tailed Shrike | Lanius schach",0.0833837689133425
+"58","Asian Koel | Eudynamys scolopaceus",0.0825584594222834
+"59","Indian Paradise-Flycatcher | Terpsiphone paradisi",0.0813480055020633
+"60","Puff-throated Babbler | Pellorneum ruficeps",0.0805502063273728
+"61","Eastern/Western Cattle Egret | Bubulcus ibis",0.0795048143053645
+"62","Rock Pigeon (Blue Rock Pigeon) | Columba livia",0.0790371389270977
+"63","Greater Flameback | Chrysocolaptes guttacristatus",0.0786519944979367
+"64","White-browed Wagtail (Large Pied Wagtail) | Motacilla maderaspatensis",0.077414030261348
+"65","Brahminy Kite | Haliastur indus",0.0762585969738652
+"66","Orange-headed Thrush | Geokichla citrina",0.0756808803301238
+"67","Rufous Babbler | Turdoides subrufa",0.0744979367262723
+"68","Brown-cheeked Fulvetta | Alcippe poioicephala",0.0740852819807428
+"69","Cinereous Tit (Great Tit) | Parus cinereus",0.0740577716643741
+"70","White-bellied Treepie | Dendrocitta leucogastra",0.0738927097661623
+"71","Grey-breasted Prinia | Prinia hodgsonii",0.0736726272352132
+"72","Yellow-billed Babbler | Turdoides affinis",0.072242090784044
+"73","Rose-ringed Parakeet | Psittacula krameri",0.0720770288858322
+"74","Asian Emerald Dove | Chalcophaps indica",0.0704814305364512
+"75","Red-wattled Lapwing | Vanellus indicus",0.0697661623108666
+"76","Small Minivet | Pericrocotus cinnamomeus",0.0688858321870701
+"77","Shikra | Accipiter badius",0.0636863823933975
+"78","Common Hawk-Cuckoo | Hierococcyx varius",0.0629160935350757
+"79","Black-naped Monarch | Hypothymis azurea",0.0627785419532325
+"80","Indian Robin | Copsychus fulicatus",0.0611829436038514
+"81","Grey-fronted Green-Pigeon (Pompadour Green-Pigeon) | Treron affinis",0.0611554332874828
+"82","Brown Shrike | Lanius cristatus",0.0609628610729023
+"83","Crested Honey Buzzard (Oriental Honey-buzzard) | Pernis ptilorhynchus",0.059009628610729
+"84","Long-billed Sunbird (Loten's Sunbird) | Cinnyris lotenius",0.0583768913342503
+"85","Ashy Prinia | Prinia socialis",0.0567537826685007
+"86","Malabar Trogon | Harpactes fasciatus",0.0566712517193948
+"87","Tickell's Blue-Flycatcher | Cyornis tickelliae",0.0564786795048143
+"88","Red-rumped Swallow | Cecropis daurica",0.0563686382393398
+"89","Little Spiderhunter | Arachnothera longirostra",0.0562585969738652
+"90","Square-tailed Bulbul (Black Bulbul) | Hypsipetes ganeesa",0.0552682255845942
+"91","Little Egret | Egretta garzetta",0.0545529573590096
+"92","White-browed Bulbul | Pycnonotus luteolus",0.0540852819807428
+"93","Dark-fronted Babbler | Rhopocichla atriceps",0.0535075653370014
+"94","Asian Brown Flycatcher | Muscicapa dauurica",0.0534800550206327
+"95","Asian Palm-Swift | Cypsiurus balasiensis",0.0532049518569464
+"96","Common Kingfisher (Small Blue Kingfisher) | Alcedo atthis",0.0520495185694635
+"97","Malabar Woodshrike | Tephrodornis sylvicola",0.0510591471801926
+"98","Dusky Crag-Martin | Ptyonoprogne concolor",0.0489133425034388
+"99","Heart-spotted Woodpecker | Hemicircus canente",0.0486382393397524
+"100","Ashy Woodswallow | Artamus fuscus",0.0485832187070151
+"101","Black Eagle | Ictinaetus malaiensis",0.0473177441540578
+"102","Brown-capped Pygmy Woodpecker (Indian Pygmy Woodpecker) | Dendrocopos nanus",0.0465199449793673
+"103","Large-billed Leaf Warbler | Phylloscopus magnirostris",0.0452269601100413
+"104","Barn Swallow | Hirundo rustica",0.0447867950481431
+"105","Jerdon's Leafbird (Jerdon's Chloropsis) | Chloropsis jerdoni",0.0445667125171939
+"106","Malabar Starling (Blyth’s Starling) | Sturnia blythii",0.0444291609353508
+"107","Mountain Imperial-Pigeon | Ducula badia",0.0442365887207703
+"108","White-breasted Waterhen | Amaurornis phoenicurus",0.0439064649243466
+"109","Jungle Owlet | Glaucidium radiatum",0.0426409903713893
+"110","White-bellied Drongo | Dicrurus caerulescens",0.0425309491059147
+"111","Indian Blackbird | Turdus simillimus",0.042283356258597
+"112","Bar-winged Flycatcher-shrike | Hemipus picatus",0.039697386519945
+"113","Indian Tit (Indian Black-lored Tit) | Machlolophus aplonotus",0.0391746905089409
+"114","Grey-headed Canary-Flycatcher | Culicicapa ceylonensis",0.0384319119669876
+"115","Black Kite | Milvus migrans",0.0362310866574966
+"116","White-bellied Blue-Flycatcher | Cyornis pallipes",0.0355708390646492
+"117","Eurasian Hoopoe | Upupa epops",0.0354883081155433
+"118","Laughing Dove (Little Brown Dove) | Streptopelia senegalensis",0.0352407152682256
+"119","Streak-throated Woodpecker | Picus xanthopygaeus",0.0347180192572215
+"120","Little Swift (Indian House Swift) | Apus affinis",0.0331499312242091
+"121","Red Spurfowl | Galloperdix spadicea",0.0327372764786795
+"122","Common Woodshrike | Tephrodornis pondicerianus",0.0325997248968363
+"123","White-rumped Munia | Lonchura striata",0.0324896836313618
+"124","Brown-breasted Flycatcher | Muscicapa muttui",0.0319944979367263
+"125","Crested Hawk-Eagle | Nisaetus cirrhatus",0.0312242090784044
+"126","Indian Roller | Coracias benghalensis",0.029958734525447
+"127","Brown-headed Barbet (Large Green Barbet) | Psilopogon zeylanicus",0.0299312242090784
+"128","Brahminy Starling | Sturnia pagodarum",0.0289408528198074
+"129","Lesser Yellownape | Picus chlorolophus",0.028665749656121
+"130","Blue-faced Malkoha | Phaenicophaeus viridirostris",0.0279779917469051
+"131","Stork-billed Kingfisher | Pelargopsis capensis",0.0278954607977992
+"132","Great Hornbill (Great Pied Hornbill) | Buceros bicornis",0.0278129298486933
+"133","Crested Treeswift | Hemiprocne coronata",0.0271251719394773
+"134","Nilgiri Flycatcher | Eumyias albicaudatus",0.026767537826685
+"135","Chestnut-tailed Starling | Sturnia malabarica",0.0265199449793673
+"136","Black-headed Cuckooshrike | Lalage melanoptera",0.0264924346629986
+"137","Black-shouldered Kite (Black-winged Kite) | Elanus caeruleus",0.0264099037138927
+"138","Rufous Woodpecker | Micropternus brachyurus",0.0254195323246217
+"139","White-rumped Shama | Copsychus malabaricus",0.0253370013755158
+"140","Grey-headed Bulbul | Pycnonotus priocephalus",0.0252544704264099
+"141","Thick-billed Flowerpecker | Dicaeum agile",0.0250068775790922
+"142","Indian Pitta | Pitta brachyura",0.0249518569463549
+"143","Common Rosefinch | Carpodacus erythrinus",0.0245116918844567
+"144","Scaly-breasted Munia (Spotted Munia) | Lonchura punctulata",0.0242365887207703
+"145","Forest Wagtail | Dendronanthus indicus",0.0238514442916094
+"146","Green Imperial-Pigeon | Ducula aenea",0.0237138927097662
+"147","Eurasian Kestrel (Common Kestrel) | Falco tinnunculus",0.0235213204951857
+"148","Intermediate Egret | Mesophoyx intermedia",0.0233287482806052
+"149","Oriental Darter | Anhinga melanogaster",0.0229711141678129
+"150","Crested Goshawk | Accipiter trivirgatus",0.0227510316368638
+"151","Hill Swallow (House Swallow) | Hirundo domicola",0.0224759284731774
+"152","Large Cuckooshrike | Coracina macei",0.0221458046767538
+"153","Plain Prinia | Prinia inornata",0.0219532324621733
+"154","Malabar Pied-Hornbill | Anthracoceros coronatus",0.0218431911966988
+"155","Blue-capped Rock-Thrush | Monticola cinclorhynchus",0.0214580467675378
+"156","Rusty-tailed Flycatcher | Ficedula ruficauda",0.0214030261348006
+"157","Verditer Flycatcher | Eumyias thalassinus",0.0210453920220083
+"158","Chestnut-shouldered Petronia (Yellow-throated Sparrow) | Petronia xanthocollis",0.0204401650618982
+"159","White-bellied Woodpecker (Great Black Woodpecker) | Dryocopus javensis",0.0201650618982118
+"160","Black-throated Munia | Lonchura kelaarti",0.0200825309491059
+"161","Kerala Laughingthrush | Trochalopteron fairbanki",0.0200550206327373
+"162","River Tern | Sterna aurantia",0.0200275103163686
+"163","Grey Francolin | Francolinus pondicerianus",0.02
+"164","Asian Openbill | Anastomus oscitans",0.0188995873452545
+"165","Wire-tailed Swallow | Hirundo smithii",0.0188445667125172
+"166","Paddyfield Pipit | Anthus rufulus",0.0188170563961486
+"167","Bay-backed Shrike | Lanius vittatus",0.0182393397524072
+"168","Jerdon's Bushlark | Mirafra affinis",0.0178266850068776
+"169","Brown Fish-Owl | Ketupa zeylonensis",0.0176616231086658
+"170","Indian Blue Robin | Larvivora brunnea",0.0176066024759285
+"171","Black-and-rufous Flycatcher (Black-and-orange Flycatcher) | Ficedula nigrorufa",0.0173039889958735
+"172","Common Flameback (Goldenbacked Three-toed Woodpecker) | Dinopium javanense",0.0171389270976616
+"173","Woolly-necked Stork | Ciconia episcopus",0.017111416781293
+"174","Lesser Whistling-Duck | Dendrocygna javanica",0.0164511691884457
+"175","Great Egret | Ardea alba",0.016423658872077
+"176","Indian Cormorant (Indian Shag) | Phalacrocorax fuscicollis",0.0163686382393398
+"177","White-rumped Needletail (White-rumped Spinetail) | Zoonavena sylvatica",0.0162585969738652
+"178","Common Sandpiper | Actitis hypoleucos",0.0161485557083906
+"179","Sri Lanka Frogmouth | Batrachostomus moniliger",0.0158734525447043
+"180","Brown-backed Needletail | Hirundapus giganteus",0.0157083906464924
+"181","Tawny-bellied Babbler | Dumetia hyperythra",0.0155433287482806
+"182","Nilgiri Wood-Pigeon | Columba elphinstonii",0.0149105914718019
+"183","Oriental Dollarbird | Eurystomus orientalis",0.0149105914718019
+"184","Indian Spot-billed Duck | Anas poecilorhyncha",0.0146629986244842
+"185","Black-naped Oriole | Oriolus chinensis",0.0142778541953232
+"186","Grey Heron | Ardea cinerea",0.0142778541953232
+"187","Indian Grey Hornbill | Ocyceros birostris",0.0141403026134801
+"188","Black-headed Ibis | Threskiornis melanocephalus",0.0138927097661623
+"189","Blue-bearded Bee-eater | Nyctyornis athertoni",0.0136726272352132
+"190","Blue-tailed Bee-eater | Merops philippinus",0.0136176066024759
+"191","Alpine Swift | Apus melba",0.0135900962861073
+"192","White-browed Fantail | Rhipidura aureola",0.0135900962861073
+"193","Yellow-footed Pigeon (Yellow-footed Green-Pigeon) | Treron phoenicopterus",0.0135625859697387
+"194","Pied Kingfisher | Ceryle rudis",0.0132049518569464
+"195","Spot-breasted Fantail (White-spotted Fantail) | Rhipidura albogularis",0.0129023383768913
+"196","Western Yellow Wagtail | Motacilla flava",0.0126547455295736
+"197","Western Crowned Leaf Warbler | Phylloscopus occipitalis",0.0119119669876204
+"198","Great Cormorant | Phalacrocorax carbo",0.0118569463548831
+"199","Tickell's Leaf Warbler | Phylloscopus affinis",0.0116918844566713
+"200","Green Warbler | Phylloscopus nitidus",0.0114718019257221
+"201","Banded Bay Cuckoo | Cacomantis sonneratii",0.0111416781292985
+"202","Yellow-crowned Woodpecker | Dendrocopos mahrattensis",0.0108665749656121
+"203","Booted Eagle | Hieraaetus pennatus",0.0108390646492435
+"204","Yellow-eyed Babbler | Chrysomma sinense",0.010646492434663
+"205","Jungle Prinia | Prinia sylvatica",0.0105914718019257
+"206","Large Grey Babbler | Turdoides malcolmi",0.0105639614855571
+"207","Blue-throated Flycatcher (Blue-throated Blue-Flycatcher) | Cyornis rubeculoides",0.0103713892709766
+"208","Eurasian Collared-Dove | Streptopelia decaocto",0.010343878954608
+"209","Rufous-bellied Eagle | Lophotriorchis kienerii",0.010343878954608
+"210","Whiskered Tern | Chlidonias hybrida",0.0103163686382393
+"211","Spotted Owlet | Athene brama",0.00932599724896836
+"212","Little Grebe | Tachybaptus ruficollis",0.00907840440165062
+"213","Malabar Lark | Galerida malabarica",0.00896836313617607
+"214","Nilgiri Pipit | Anthus nilghiriensis",0.00896836313617607
+"215","Baya Weaver | Ploceus philippinus",0.00894085281980743
+"216","Grey-bellied Cuckoo | Cacomantis passerinus",0.00894085281980743
+"217","Purple Heron | Ardea purpurea",0.00874828060522696
+"218","Indian Cuckoo | Cuculus micropterus",0.00830811554332875
+"219","Jerdon's Nightjar | Caprimulgus atripennis",0.00828060522696011
+"220","Fork-tailed Drongo-Cuckoo | Surniculus dicruroides",0.00800550206327373
+"221","Indian Nuthatch | Sitta castanea",0.00781292984869326
+"222","Brown Hawk-Owl | Ninox scutulata",0.00773039889958735
+"223","Jungle Bush-Quail | Perdicula asiatica",0.00762035763411279
+"224","Indian Silverbill (White-throated Munia) | Euodice malabarica",0.00756533700137552
+"225","Green Sandpiper | Tringa ochropus",0.0074828060522696
+"226","Speckled Piculet | Picumnus innominatus",0.0074828060522696
+"227","Indian Scops-Owl | Otus bakkamoena",0.00734525447042641
+"228","Bonelli's Eagle | Aquila fasciata",0.00720770288858322
+"229","Besra | Accipiter virgatus",0.00704264099037139
+"230","Black-chinned Laughingthrush (Nilgiri Laughingthrush) | Trochalopteron cachinnans",0.00693259972489684
+"231","Wynaad Laughingthrush | Ianthocincla delesserti",0.00687757909215956
+"232","Lesser Fish-Eagle | Ichthyophaga humilis",0.00668500687757909
+"233","Pied Cuckoo (Jacobin Cuckoo) | Clamator jacobinus",0.00665749656121045
+"234","Thick-billed Warbler | Iduna aedon",0.00657496561210454
+"235","Oriental Turtle-Dove | Streptopelia orientalis",0.00646492434662999
+"236","White-rumped Vulture | Gyps bengalensis",0.00640990371389271
+"237","Jungle Nightjar (Indian Jungle Nightjar) | Caprimulgus indicus",0.00638239339752407
+"238","Blue Rock-Thrush | Monticola solitarius",0.00624484181568088
+"239","Tricolored Munia (Black-headed Munia) | Lonchura malacca",0.00616231086657497
+"240","Black Baza | Aviceda leuphotes",0.00610729023383769
+"241","Wood Sandpiper | Tringa glareola",0.00607977991746905
+"242","Red-breasted Flycatcher | Ficedula parva",0.00602475928473177
+"243","Painted Stork | Mycteria leucocephala",0.00594222833562586
+"244","Peregrine Falcon | Falco peregrinus",0.00563961485557084
+"245","White-bellied Shortwing (White-bellied Blue Robin) | Brachypteryx albiventris",0.00558459422283356
+"246","Blue-eared Kingfisher | Alcedo meninting",0.00541953232462173
+"247","Short-toed Snake-Eagle | Circaetus gallicus",0.00541953232462173
+"248","Booted Warbler | Iduna caligata",0.00528198074277854
+"249","Oriental Scops-Owl | Otus sunia",0.0052544704264099
+"250","Rosy Starling | Pastor roseus",0.00514442916093535
+"251","Striated Heron (Little Heron) | Butorides striata",0.00511691884456671
+"252","Ashy-crowned Sparrow-Lark (Ashy-crowned Finch-Lark) | Eremopterix griseus",0.00506189821182944
+"253","Little Ringed Plover | Charadrius dubius",0.00506189821182944
+"254","Hair-crested Drongo (Spangled Drongo) | Dicrurus hottentottus",0.00489683631361761
+"255","White-eyed Buzzard | Butastur teesa",0.00486932599724897
+"256","Eurasian Coot | Fulica atra",0.00478679504814305
+"257","Zitting Cisticola | Cisticola juncidis",0.00478679504814305
+"258","Oriental Skylark | Alauda gulgula",0.00475928473177442
+"259","Taiga Flycatcher (Red-throated Flycatcher) | Ficedula albicilla",0.00462173314993122
+"260","Common Buzzard | Buteo buteo",0.00448418156808803
+"261","Red-headed Vulture | Sarcogyps calvus",0.0044566712517194
+"262","Vigors's Sunbird | Aethopyga vigorsii",0.00442916093535076
+"263","Tree Pipit | Anthus trivialis",0.00434662998624484
+"264","Painted Bush-Quail | Perdicula erythrorhyncha",0.00415405777166437
+"265","Osprey | Pandion haliaetus",0.00398899587345255
+"266","Yellow-wattled Lapwing | Vanellus malabaricus",0.00390646492434663
+"267","Red-naped Ibis (Indian Black Ibis) | Pseudibis papillosa",0.00387895460797799
+"268","White Wagtail | Motacilla alba",0.00376891334250344
+"269","Clamorous Reed-Warbler (Indian Great Reed-Warbler) | Acrocephalus stentoreus",0.0037414030261348
+"270","Legge's Hawk-Eagle | Nisaetus kelaarti",0.00368638239339752
+"271","Mottled Wood-Owl | Strix ocellata",0.00352132049518569
+"272","Indian Nightjar | Caprimulgus asiaticus",0.00343878954607978
+"273","White-bellied Sea-Eagle | Haliaeetus leucogaster",0.00327372764786795
+"274","Spot-bellied Eagle-Owl | Bubo nipalensis",0.00319119669876204
+"275","Great Eared-Nightjar | Lyncornis macrotis",0.00299862448418157
+"276","Brown Wood-Owl | Strix leptogrammica",0.0028060522696011
+"277","Common Greenshank | Tringa nebularia",0.0028060522696011
+"278","Grey-headed Swamphen (Purple Swamphen) | Porphyrio poliocephalus",0.0028060522696011
+"279","Sirkeer Malkoha | Taccocua leschenaultii",0.0028060522696011
+"280","Bronze-winged Jacana | Metopidius indicus",0.00277854195323246
+"281","Black-crowned Night-Heron | Nycticorax nycticorax",0.00275103163686382
+"282","Cotton Pygmy-Goose (Cotton Teal) | Nettapus coromandelianus",0.00272352132049519
+"283","Eurasian Marsh-Harrier | Circus aeruginosus",0.00272352132049519
+"284","Nilgiri Thrush | Zoothera neilgherriensis",0.00272352132049519
+"285","Rufous-bellied Shortwing (Nilgiri Blue Robin) | Brachypteryx major",0.00269601100412655
+"286","Savanna Nightjar | Caprimulgus affinis",0.00261348005502063
+"287","Black-backed Dwarf-Kingfisher (Oriental Dwarf Kingfisher) | Ceyx erithaca",0.00247592847317744
+"288","Black-winged Stilt | Himantopus himantopus",0.00247592847317744
+"289","Tytler's Leaf Warbler | Phylloscopus tytleri",0.00247592847317744
+"290","Common/Stejneger's Stonechat (Siberian/Stejneger's Stonechat) | Saxicola maurus",0.00239339752407153
+"291","Olive-backed Pipit | Anthus hodgsoni",0.00236588720770289
+"292","Pallid Harrier | Circus macrourus",0.00233837689133425
+"293","Northern Pintail | Anas acuta",0.00231086657496561
+"294","Rufous-tailed Lark | Ammomanes phoenicura",0.00217331499312242
+"295","Crested Bunting | Melophus lathami",0.00214580467675378
+"296","Broad-tailed Grassbird | Schoenicola platyurus",0.00211829436038514
+"297","Eurasian Moorhen | Gallinula chloropus",0.00211829436038514
+"298","Sulphur-bellied Warbler | Phylloscopus griseolus",0.00209078404401651
+"299","Indian Vulture (Indian Long-billed Vulture) | Gyps indicus",0.00203576341127923
+"300","Streak-throated Swallow | Petrochelidon fluvicola",0.00200825309491059
+"301","Small Pratincole | Glareola lactea",0.00198074277854195
+"302","Black-capped Kingfisher | Halcyon pileata",0.00195323246217331
+"303","Eurasian Sparrowhawk | Accipiter nisus",0.00195323246217331
+"304","White-naped Woodpecker | Chrysocolaptes festivus",0.00192572214580468
+"305","Hume's Whitethroat | Sylvia althaea",0.00189821182943604
+"306","Indian Bushlark (Red-winged Bushlark) | Mirafra erythroptera",0.00184319119669876
+"307","White-bellied Minivet | Pericrocotus erythropygius",0.00178817056396149
+"308","Large Hawk-Cuckoo | Hierococcyx sparverioides",0.00176066024759285
+"309","Yellow-throated Bulbul | Pycnonotus xantholaemus",0.00176066024759285
+"310","Alexandrine Parakeet | Psittacula eupatria",0.00170563961485557
+"311","Common Babbler | Turdoides caudata",0.00156808803301238
+"312","Eurasian Crag-Martin | Ptyonoprogne rupestris",0.00154057771664374
+"313","Painted Francolin | Francolinus pictus",0.00154057771664374
+"314","Golden-headed Cisticola (Bright-headed Cisticola) | Cisticola exilis",0.00145804676753783
+"315","Common Chiffchaff | Phylloscopus collybita",0.00143053645116919
+"316","Ultramarine Flycatcher | Ficedula superciliaris",0.00132049518569464
+"317","Lesser Adjutant | Leptoptilos javanicus",0.00123796423658872
+"318","Sykes's Warbler | Iduna rama",0.00123796423658872
+"319","Cinnamon Bittern | Ixobrychus cinnamomeus",0.00121045392022008
+"320","Common House-Martin (Northern House-Martin) | Delichon urbicum",0.00121045392022008
+"321","Black Redstart | Phoenicurus ochruros",0.00118294360385144
+"322","Tawny Eagle | Aquila rapax",0.00118294360385144
+"323","Barred Buttonquail | Turnix suscitator",0.00115543328748281
+"324","Pheasant-tailed Jacana | Hydrophasianus chirurgus",0.00115543328748281
+"325","Montagu's Harrier | Circus pygargus",0.00112792297111417
+"326","Red Avadavat | Amandava amandava",0.00112792297111417
+"327","Grey-headed Fish-Eagle | Ichthyophaga ichthyaetus",0.00110041265474553
+"328","Hume's Warbler | Phylloscopus humei",0.00110041265474553
+"329","Northern Shoveler | Anas clypeata",0.00110041265474553
+"330","Pin-tailed Snipe | Gallinago stenura",0.00110041265474553
+"331","Garganey | Anas querquedula",0.00107290233837689
+"332","Eurasian Spoonbill | Platalea leucorodia",0.00101788170563961
+"333","Glossy Ibis | Plegadis falcinellus",0.00101788170563961
+"334","Lesser Whitethroat | Sylvia curruca",0.000907840440165062
+"335","Malayan Night-Heron | Gorsachius melanolophus",0.000907840440165062
+"336","Paddyfield Warbler | Acrocephalus agricola",0.000907840440165062
+"337","Sri Lanka Bay-Owl | Phodilus assimilis",0.000907840440165062
+"338","Richard's Pipit | Anthus richardi",0.000880330123796424
+"339","Southern Grey Shrike | Lanius meridionalis",0.000880330123796424
+"340","Blyth's Swift (Fork-tailed Swift) | Apus leuconyx",0.000852819807427785
+"341","Common Pochard | Aythya ferina",0.000852819807427785
+"342","Barn Owl | Tyto alba",0.000770288858321871
+"343","Black Stork | Ciconia nigra",0.000770288858321871
+"344","Chestnut-winged Cuckoo | Clamator coromandus",0.000770288858321871
+"345","Sykes's Lark (Tawny Lark) | Galerida deva",0.000770288858321871
+"346","Tawny Pipit | Anthus campestris",0.000770288858321871
+"347","Western Reef-Heron (Western Reef-Egret) | Egretta gularis",0.000770288858321871
+"348","Green-winged Teal (Common Teal) | Anas crecca",0.000742778541953232
+"349","Spot-billed Pelican | Pelecanus philippensis",0.000742778541953232
+"350","Common Cuckoo | Cuculus canorus",0.000687757909215956
+"351","Greater Spotted Eagle | Clanga clanga",0.000687757909215956
+"352","Lesser Coucal | Centropus bengalensis",0.000687757909215956
+"353","Ruddy Shelduck (Brahminy Duck) | Tadorna ferruginea",0.000687757909215956
+"354","Common Snipe | Gallinago gallinago",0.000660247592847318
+"355","Black Bittern | Ixobrychus flavicollis",0.00063273727647868
+"356","Long-billed Pipit | Anthus similis",0.00063273727647868
+"357","Red Collared-Dove (Red Turtle-Dove) | Streptopelia tranquebarica",0.00063273727647868
+"358","Rock Eagle-Owl (Indian Eagle-Owl) | Bubo bengalensis",0.00063273727647868
+"359","Gull-billed Tern | Gelochelidon nilotica",0.000605226960110041
+"360","Little Stint | Calidris minuta",0.000605226960110041
+"361","Grey-hooded Bunting (Grey-necked Bunting) | Emberiza buchanani",0.000577716643741403
+"362","Kashmir Flycatcher | Ficedula subrubra",0.000577716643741403
+"363","Tufted Duck | Aythya fuligula",0.000577716643741403
+"364","Blyth's Pipit | Anthus godlewskii",0.000550206327372765
+"365","Kentish Plover | Charadrius alexandrinus",0.000550206327372765
+"366","Rain Quail | Coturnix coromandelica",0.000550206327372765
+"367","Rock Bush-Quail | Perdicula argoondah",0.000550206327372765
+"368","Black-headed Bunting | Emberiza melanocephala",0.000495185694635488
+"369","Common Grasshopper-Warbler | Locustella naevia",0.000495185694635488
+"370","Indian Spotted Eagle | Clanga hastata",0.00046767537826685
+"371","Painted Spurfowl | Galloperdix lunulata",0.00046767537826685
+"372","Red-necked Falcon | Falco chicquera",0.00046767537826685
+"373","Citrine Wagtail | Motacilla citreola",0.000440165061898212
+"374","Indian Thick-knee (Indian Stone-curlew) | Burhinus indicus",0.000440165061898212
+"375","Lesser Kestrel | Falco naumanni",0.000440165061898212
+"376","Watercock | Gallicrex cinerea",0.000440165061898212
+"377","Bar-headed Goose | Anser indicus",0.000412654745529574
+"378","Jerdon's Baza | Aviceda jerdoni",0.000412654745529574
+"379","Marsh Sandpiper | Tringa stagnatilis",0.000412654745529574
+"380","Amur Falcon | Falco amurensis",0.000330123796423659
+"381","Eurasian Hobby | Falco subbuteo",0.000330123796423659
+"382","European Bee-eater | Merops apiaster",0.000330123796423659
+"383","Red-headed Bunting | Emberiza bruniceps",0.000330123796423659
+"384","Ruddy-breasted Crake | Zapornia fusca",0.000330123796423659
+"385","Steppe Eagle | Aquila nipalensis",0.000330123796423659
+"386","Temminck's Stint | Calidris temminckii",0.000330123796423659
+"387","Egyptian Vulture | Neophron percnopterus",0.000302613480055021
+"388","Asian Pied Starling (Pied Myna) | Gracupica contra",0.000275103163686382
+"389","Common Redshank | Tringa totanus",0.000275103163686382
+"390","Eurasian Wigeon | Anas penelope",0.000275103163686382
+"391","Great Thick-knee (Great Stone-curlew) | Esacus recurvirostris",0.000275103163686382
+"392","Bluethroat | Luscinia svecica",0.000247592847317744
+"393","Brown Crake | Zapornia akool",0.000247592847317744
+"394","Gadwall | Anas strepera",0.000247592847317744
+"395","Laggar Falcon | Falco jugger",0.000247592847317744
+"396","Square-tailed Drongo-Cuckoo | Surniculus lugubris",0.000247592847317744
+"397","Yellow-legged Buttonquail | Turnix tanki",0.000247592847317744
+"398","Brown-headed Gull | Chroicocephalus brunnicephalus",0.000220082530949106
+"399","Eurasian Wryneck | Jynx torquilla",0.000220082530949106
+"400","European Roller | Coracias garrulus",0.000220082530949106
+"401","Lesser Sand-Plover | Charadrius mongolus",0.000220082530949106
+"402","Slaty-legged Crake | Rallina eurizonoides",0.000220082530949106
+"403","Streaked Weaver | Ploceus manyar",0.000220082530949106
+"404","Yellow Bittern | Ixobrychus sinensis",0.000220082530949106
+"405","Ashy Minivet | Pericrocotus divaricatus",0.000192572214580468
+"406","Black-headed Gull | Chroicocephalus ridibundus",0.000192572214580468
+"407","Brown Rock Chat (Indian Chat) | Cercomela fusca",0.000192572214580468
+"408","Caspian Tern | Hydroprogne caspia",0.000192572214580468
+"409","Comb Duck (Knob-billed Duck) | Sarkidiornis melanotos",0.000192572214580468
+"410","Common Tern | Sterna hirundo",0.000192572214580468
+"411","Orange-breasted Pigeon | Treron bicinctus",0.000165061898211829
+"412","Pied Thrush | Geokichla wardii",0.000165061898211829
+"413","Plain Flowerpecker | Dicaeum minullum",0.000165061898211829
+"414","Short-eared Owl | Asio flammeus",0.000165061898211829
+"415","Bank Myna | Acridotheres ginginianus",0.000137551581843191
+"416","Common Hill Myna | Gracula religiosa",0.000137551581843191
+"417","Greater Painted-Snipe | Rostratula benghalensis",0.000137551581843191
+"418","Long-legged Buzzard | Buteo rufinus",0.000137551581843191
+"419","Tickell's Thrush | Turdus unicolor",0.000137551581843191
+"420","White-eared Bulbul | Pycnonotus leucotis",0.000137551581843191
+"421","Yellow-browed Warbler | Phylloscopus inornatus",0.000137551581843191
+"422","Black-tailed Godwit | Limosa limosa",0.000110041265474553
+"423","Rufous-fronted Prinia | Prinia buchanani",0.000110041265474553
+"424","Syke's Short-toed Lark | Calandrella dukhunensis",0.000110041265474553
+"425","Desert Wheatear | Oenanthe deserti",8.25309491059147e-05
+"426","Dunlin | Calidris alpina",8.25309491059147e-05
+"427","Eurasian Woodcock | Scolopax rusticola",8.25309491059147e-05
+"428","Greater Flamingo | Phoenicopterus roseus",8.25309491059147e-05
+"429","Grey-throated Martin | Riparia chinensis",8.25309491059147e-05
+"430","Little Tern | Sternula albifrons",8.25309491059147e-05
+"431","Pallas's Gull | Ichthyaetus ichthyaetus",8.25309491059147e-05
+"432","Black-bellied Tern | Sterna acuticauda",5.50206327372765e-05
+"433","Crimson Sunbird | Aethopyga siparaja",5.50206327372765e-05
+"434","Grey-headed Lapwing | Vanellus cinereus",5.50206327372765e-05
+"435","Himalayan Black Bulbul | Hypsipetes leucocephalus",5.50206327372765e-05
+"436","Indian Courser | Cursorius coromandelicus",5.50206327372765e-05
+"437","Pacific Golden-Plover | Pluvialis fulva",5.50206327372765e-05
+"438","Ruff | Calidris pugnax",5.50206327372765e-05
+"439","Slaty-breasted Rail | Gallirallus striatus",5.50206327372765e-05
+"440","Terek Sandpiper | Xenus cinereus",5.50206327372765e-05
+"441","Asian Desert Warbler | Sylvia nana",2.75103163686382e-05
+"442","Blue-and-white Flycatcher | Cyanoptila cyanomelana",2.75103163686382e-05
+"443","Chestnut-bellied Sandgrouse | Pterocles exustus",2.75103163686382e-05
+"444","Common Quail | Coturnix coturnix",2.75103163686382e-05
+"445","Crested Lark | Galerida cristata",2.75103163686382e-05
+"446","Curlew Sandpiper | Calidris ferruginea",2.75103163686382e-05
+"447","Dusky Warbler | Phylloscopus fuscatus",2.75103163686382e-05
+"448","Eastern Orphean Warbler | Sylvia crassirostris",2.75103163686382e-05
+"449","Eyebrowed Thrush | Turdus obscurus",2.75103163686382e-05
+"450","Ferruginous Duck (Ferruginous Pochard) | Aythya nyroca",2.75103163686382e-05
+"451","Fulvous Whistling-Duck | Dendrocygna bicolor",2.75103163686382e-05
+"452","Great Crested Tern | Thalasseus bergii",2.75103163686382e-05
+"453","Great Knot | Calidris tenuirostris",2.75103163686382e-05
+"454","Lesser Black-backed Gull | Larus fuscus",2.75103163686382e-05
+"455","Lesser Cuckoo | Cuculus poliocephalus",2.75103163686382e-05
+"456","Lesser Flamingo | Phoeniconaias minor",2.75103163686382e-05
+"457","Long-tailed Jaeger | Stercorarius longicaudus",2.75103163686382e-05
+"458","Marbled Teal (Marbled Duck) | Marmaronetta angustirostris",2.75103163686382e-05
+"459","Oriental Hobby | Falco severus",2.75103163686382e-05
+"460","Oriental Pratincole | Glareola maldivarum",2.75103163686382e-05
+"461","Pacific Swift | Apus pacificus",2.75103163686382e-05
+"462","Painted Sandgrouse | Pterocles indicus",2.75103163686382e-05
+"463","Red-crested Pochard | Netta rufina",2.75103163686382e-05
+"464","Sarus Crane | Antigone antigone",2.75103163686382e-05
+"465","Singing Bushlark | Mirafra cantillans",2.75103163686382e-05
+"466","Slender-billed Gull | Chroicocephalus genei",2.75103163686382e-05
+"467","Whimbrel | Numenius phaeopus",2.75103163686382e-05
+"468","White Stork | Ciconia ciconia",2.75103163686382e-05

@@ -1,0 +1,651 @@
+---
+title: "Kerala atlas analysis Alappuzha"
+output: pdf_document
+---
+
+<style>
+  .col2 {
+    columns: 2 250px;         /* number of columns and width in pixels*/
+    -webkit-columns: 2 250px; /* chrome, safari */
+    -moz-columns: 2 250px;    /* firefox */
+  }
+  .col3 {
+    columns: 3 100px;
+    -webkit-columns: 3 100px;
+    -moz-columns: 3 100px;
+  }
+</style>
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, ignore=TRUE}
+
+library(ggplot2)
+library(raster)
+library(dplyr)
+library(tidyr)
+library(RColorBrewer)
+library(rgeos)
+library(knitr)
+
+par(pty = 's')
+
+load("C:/Users/Abinand Reddy/Desktop/Thesis/NCF/eBird/All-eBird-India-data-2016-07-06.RData")
+
+ind_d <- getData('GADM',country = 'IND', level = 2)
+
+map_al <- ind_d[ind_d@data$NAME_2=="Alappuzha",]
+
+map_al1 <- ind_d[ind_d@data$NAME_1=="Kerala",]
+
+al_grid <- read.csv('C:/Users/Abinand Reddy/Desktop/mysore bird atlas/Kerala bird atlas/Final files/Alappuzha/cells_alappuzha.csv')
+
+out_x <- c(0,2,2,3,3,4,4,5,5,6,6,7,7,6,6,3,3,2,2,1,1,0,0)
+out_y <- c(0,0,-2,-2,-5,-5,-7,-7,-8,-8,-9,-9,-12,-12,-13,-13,-11,-11,-9,-9,-5,-5,0)
+
+al_out_x <- 76.25 + 0.0625*out_x
+al_out_y <- 9.875 + 0.0625*out_y
+
+outg <- cbind(al_out_x,al_out_y)
+q = Polygon(outg)
+qs = Polygons(list(q),1)
+sqs = SpatialPolygons(list(qs))
+proj4string(sqs) <- proj4string(map_al)
+grO <- gIntersection(map_al1, sqs, byid = T)
+
+
+boun_x <- c(-2.5,5,5,6,6,7,7,-2.5,-2.5)
+boun_y <- c(2,2,-6,-6,-8,-8,-13,-13,2)
+
+al_boun_x <- 76.25 + 0.0625*boun_x
+al_boun_y <- 9.875 + 0.0625*boun_y
+
+
+al_boun_x
+
+xym <- cbind(al_boun_x,al_boun_y)
+p = Polygon(xym)
+ps = Polygons(list(p),1)
+sps = SpatialPolygons(list(ps))
+proj4string(sps) <- proj4string(map_al)
+grC <- gIntersection(map_al1, sps, byid = T)
+grC1 <- gIntersection(map_al, sps, byid = T)
+
+
+minCoord <- c(min(al_grid$Longitude),min(al_grid$Latitude)) + 0.0625/2 # minimum of the state bounding box
+gridSize <- c(0.0625, 0.0625) # grid cell size in degrees
+noCells <- (c(max(al_grid$Longitude),max(al_grid$Latitude))- c(min(al_grid$Longitude),min(al_grid$Latitude)))/gridSize # specifies dimensions of grid
+
+
+
+gr <- GridTopology(minCoord, gridSize, noCells)
+gr <- as(as(SpatialGrid(gr), "SpatialPixels"), "SpatialPolygons")
+proj4string(gr) <- proj4string(map_al)
+
+
+al_grid1 <- with(al_grid, aggregate(cbind(Longitude,Latitude)~Sub_cell_id, FUN = min))
+
+al_grid1$to.lat <- al_grid1$Latitude + 0.0625
+
+al_grid1$to.long <- al_grid1$Longitude + 0.0625
+
+al_grid1$Grid <- al_grid$Grid[match(al_grid1$Sub_cell_id,al_grid$Sub_cell_id)]
+
+al_grid2 <- with(al_grid1, aggregate(cbind(Longitude,Latitude,to.lat,to.long)~Grid, FUN = mean))
+
+geo_grid <- function(lt){
+  long1 <- as.numeric(lt[1])
+  long2 <- as.numeric(lt[4])
+  lat1 <- as.numeric(lt[2])
+  lat2 <- as.numeric(lt[3])
+  t <- matrix(c(long1,lat1,long1,lat2,long2,lat2,long2,lat1,long1,lat1), ncol = 2,byrow = T)
+  t
+}
+
+mpal <- list()
+
+for(i in 1:nrow(al_grid2)){
+  ts <- Polygons(list(Polygon(geo_grid(al_grid2[i,2:5]))), al_grid2$Grid[i])
+  mpal <- c(mpal,ts)
+}
+
+polys <- SpatialPolygons(mpal)
+
+proj4string(polys) = proj4string(ind_d)
+
+
+tp_x <- c(76.33,76.33,76.46,76.46,76.33)
+tp_y <- c(9.51,9.75,9.75,9.51,9.51)
+
+tpd <- cbind(tp_x,tp_y)
+tp = Polygon(tpd)
+tp = Polygons(list(tp),1)
+tps = SpatialPolygons(list(tp))
+proj4string(tps) <- proj4string(map_al)
+
+grClip <- gIntersection(polys, map_al1 + tps, byid = T, drop_not_poly = T)
+grClip.df <- fortify(grClip)
+grClip.df$id <- unlist(lapply(strsplit(grClip.df$id," "), function(x) x[1]))
+grClip1 <- left_join(grClip.df, al_grid2, by=c('id'= 'Grid'))
+negal <- (grC - map_al)
+
+map_al.df <- fortify(map_al)
+negal.df <- fortify(negal)
+spsdf<- fortify(sps)
+
+
+```
+
+
+
+
+
+##District Level
+
+
+```{r data wet, echo=FALSE, warning=F}
+
+
+kl.use <- read.csv('C:/Users/Abinand Reddy/Desktop/mysore bird atlas/Kerala bird atlas/Print ready maps/KBA-Alappuzha-records.csv')
+
+kl.use <- kl.use[kl.use$APPROVED == 1,]
+
+kl.use$Grid <- al_grid$Grid[match(kl.use$Subcell, al_grid$Sub_cell_id)]
+
+all.lists <-all %>% group_by(group.id) %>% slice(1) %>% ungroup()
+
+al_nonatlas_lists_wet1 <- all.lists %>% 
+  filter(SUBNATIONAL2_CODE == 'IN-KL-AL' & !SAMPLING.EVENT.IDENTIFIER %in% kl.use$SAMPLING.EVENT.IDENTIFIER & DURATION.MINUTES > 10 & CATEGORY %in% c("species","domestic","issf","form") & APPROVED == 1 & ALL.SPECIES.REPORTED ==1) %>%
+  separate(upload.month, c('year', 'month'), sep = '-',remove = FALSE)  %>% filter(month %in% c('07','08','09')) 
+
+al_nonatlas_lists_wet <- al_nonatlas_lists_wet1
+
+al_nonatlas_lists_wet2 <- al_nonatlas_lists_wet1 %>% filter(DURATION.MINUTES < 21)
+
+
+coordinates(al_nonatlas_lists_wet) <- ~LONGITUDE+LATITUDE
+
+proj4string(al_nonatlas_lists_wet) <- proj4string(polys)
+
+al_nonatlas_wet_gr <- over(polys,al_nonatlas_lists_wet, returnList = T)
+
+
+al_nonatlas_wet_gr1 <- do.call(rbind,al_nonatlas_wet_gr)
+
+al_nonatlas_wet_gr1$grid <- rownames(al_nonatlas_wet_gr1)
+
+al_nonatlas_wet_gr2 <- al_nonatlas_wet_gr1 %>% separate(grid, c('Grid','no'), sep = ']', remove = T)
+
+al_nonatlas_wet_gr2$Grid <- paste(al_nonatlas_wet_gr2$Grid,']', sep = '')
+
+al_nonatlas_wet_gr3 <- al_nonatlas_wet_gr2 %>% select(group.id, Grid)
+
+al_nonatlas_wet <- left_join(al_nonatlas_wet_gr3, all, by = c('group.id' = 'group.id')) 
+
+al_nonatlas_wetd <- al_nonatlas_wet %>% group_by(group.id) %>% distinct(SPECIES.NAME) %>% ungroup()
+
+species_freq <- al_nonatlas_wetd %>% group_by(SPECIES.NAME) %>% summarise(n_eBird = n()) %>% arrange(desc(n_eBird))
+
+species_freq$frequency_eBird <- species_freq$n_eBird*100/length(unique(al_nonatlas_wetd$group.id))
+
+kl.use_wet <- kl.use %>% filter(year == 2015)
+
+kl.use_wet_freq <- kl.use_wet %>% group_by(SPECIES.NAME) %>% summarise(n_Atlas = n()) %>% arrange(desc(n_Atlas))
+
+kl.use_wet_freq$frequency_Atlas <- kl.use_wet_freq$n_Atlas*100/length(unique(kl.use_wet$group.id))
+
+sp_freq_district <- left_join(kl.use_wet_freq,species_freq, by = c('SPECIES.NAME' = 'SPECIES.NAME'))
+
+sp_freq_district <- sp_freq_district %>% mutate(diff_district = frequency_Atlas - frequency_eBird) %>% arrange(desc(diff_district))
+
+sp_freq_district <- sp_freq_district[,c(1,2,4,3,5,6)]
+
+sp_freq_district[,-1] <- round(sp_freq_district[,-1],2)
+
+
+p_district_Atlas <- ggplot()+
+  geom_rect(aes(xmin = 76.09375,ymin  = 9.0625,xmax = 76.5,ymax = 10), fill = 'light blue') +
+  geom_polygon(data = map_al.df, aes(x=long, y=lat, group=group), fill = 'White') +
+  geom_polygon(data = negal.df, aes(x=long, y=lat, group = group), fill = 'White') +
+  geom_path(data = map_al.df, aes(x=long, y=lat, group=group)) +
+  geom_path(data = negal.df, aes(x=long, y=lat, group=group)) +
+  geom_path(data = spsdf, aes(x=long, y=lat, group=group), col = 'white') +
+  geom_point(data = kl.use_wet, aes(x = LONGITUDE,y = LATITUDE)) +
+  scale_x_continuous(expand = c(0,0)) +
+  scale_y_continuous(expand = c(0,0)) +
+  theme_bw()+
+  theme(axis.line=element_blank(),
+        axis.text.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  ggtitle('Atlas Lists') +
+  coord_map()
+
+
+
+p_district_eBird <- ggplot()+
+  geom_rect(aes(xmin = 76.09375,ymin  = 9.0625,xmax = 76.5,ymax = 10), fill = 'light blue') +
+  geom_polygon(data = map_al.df, aes(x=long, y=lat, group=group), fill = 'White') +
+  geom_polygon(data = negal.df, aes(x=long, y=lat, group = group), fill = 'White') +
+  geom_path(data = map_al.df, aes(x=long, y=lat, group=group)) +
+  geom_path(data = negal.df, aes(x=long, y=lat, group=group)) +
+  geom_path(data = spsdf, aes(x=long, y=lat, group=group), col = 'white') +
+  geom_point(data = al_nonatlas_lists_wet1, aes(x = LONGITUDE,y = LATITUDE)) +
+  scale_x_continuous(expand = c(0,0)) +
+  scale_y_continuous(expand = c(0,0)) +
+  theme_bw()+
+  theme(axis.line=element_blank(),
+        axis.text.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  ggtitle('eBird Lists') +
+  coord_map()
+```
+
+<div class = 'col2'>
+```{r district maps wet, echo=FALSE, fig.height=8, warning=FALSE}
+p_district_eBird
+p_district_Atlas
+
+```
+</div>
+
+```{r district chart wet, echo = FALSE, warning = FALSE}
+
+sp_freq_district1 <- sp_freq_district %>% slice(c(1:10,(n()-10):n())) %>% select(SPECIES.NAME) %>% separate(SPECIES.NAME, c('Common Name','Scientific Name'), sep = '\\| ')
+
+
+tab_wet <- data.frame(cbind(sp_freq_district1[1:10,1], sp_freq_district1[11:20,1]))
+
+colnames(tab_wet) <- c('**Under Represented**', '**Over Represented**')
+
+kable(tab_wet, format = 'pandoc')
+
+plot(sp_freq_district$frequency_Atlas,sp_freq_district$frequency_eBird, xlab = 'Atlas Frequency', ylab = 'eBird Frequency', xlim = c(0,100), ylim = c(0,100))
+abline(a = 0, b = 1, col = 'red')
+
+```
+
+##Grid level
+
+<div class = 'col2'>
+```{r district grid maps wet, echo=FALSE, fig.height=8, warning=FALSE}
+
+polysdf <- fortify(polys)
+
+p_grid_eBird <- ggplot()+
+  geom_rect(aes(xmin = 76.09375,ymin  = 9.0625,xmax = 76.5,ymax = 10), fill = 'light blue') +
+  geom_polygon(data = map_al.df, aes(x=long, y=lat, group=group), fill = 'White') +
+  geom_polygon(data = negal.df, aes(x=long, y=lat, group = group), fill = 'White') +
+  geom_path(data = map_al.df, aes(x=long, y=lat, group=group)) +
+  geom_path(data = negal.df, aes(x=long, y=lat, group=group)) +
+  geom_path(data = spsdf, aes(x=long, y=lat, group=group), col = 'white') +
+  geom_path(data = polysdf, aes(x=long, y=lat, group=group), col = 'dark red') +
+  geom_point(data = al_nonatlas_lists_wet1, aes(x = LONGITUDE,y = LATITUDE)) +
+  scale_x_continuous(expand = c(0,0)) +
+  scale_y_continuous(expand = c(0,0)) +
+  theme_bw()+
+  theme(axis.line=element_blank(),
+        axis.text.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  ggtitle('eBird Lists') +
+  coord_map()
+
+p_grid_Atlas <- ggplot()+
+  geom_rect(aes(xmin = 76.09375,ymin  = 9.0625,xmax = 76.5,ymax = 10), fill = 'light blue') +
+  geom_polygon(data = map_al.df, aes(x=long, y=lat, group=group), fill = 'White') +
+  geom_polygon(data = negal.df, aes(x=long, y=lat, group = group), fill = 'White') +
+  geom_path(data = map_al.df, aes(x=long, y=lat, group=group)) +
+  geom_path(data = negal.df, aes(x=long, y=lat, group=group)) +
+  geom_path(data = spsdf, aes(x=long, y=lat, group=group), col = 'white') +
+  geom_path(data = polysdf, aes(x=long, y=lat, group=group), col = 'dark red') +
+  geom_point(data = kl.use_wet, aes(x = LONGITUDE,y = LATITUDE)) +
+  scale_x_continuous(expand = c(0,0)) +
+  scale_y_continuous(expand = c(0,0)) +
+  theme_bw()+
+  theme(axis.line=element_blank(),
+        axis.text.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  ggtitle('Atlas Lists') +
+  coord_map()
+
+p_grid_Atlas
+p_grid_eBird
+
+```
+</div>
+
+
+
+```{r, warning=F, echo = F}
+al_nonatlas_wet_grid <- al_nonatlas_wet %>% group_by(Grid,group.id) %>% distinct(SPECIES.NAME) %>% ungroup() %>% group_by(SPECIES.NAME,Grid) %>% summarise(n = n())
+
+al_nonatlas_wet_grid_lists <- al_nonatlas_wet %>% group_by(Grid) %>% summarise(n_lists = n_distinct(group.id))
+
+al_nonatlas_wet_gridf <- left_join(al_nonatlas_wet_grid,al_nonatlas_wet_grid_lists, by = c('Grid' = 'Grid'))
+
+al_nonatlas_wet_gridf1 <- al_nonatlas_wet_gridf %>% mutate(frequency_grid = n*100/n_lists) %>% group_by(SPECIES.NAME) %>% summarise(Percentage_grids_eBird = n()*100/length(unique(al_nonatlas_wet_gridf$Grid)), Average_frequency_eBird = sum(frequency_grid/length(unique(al_nonatlas_wet_gridf$Grid)))) %>% arrange(desc(Average_frequency_eBird))
+
+kl.use_wet_grid <- kl.use_wet %>% group_by(SPECIES.NAME,Grid) %>% summarise(n = n())
+
+kl.use_wet_grid_lists <- kl.use_wet %>% group_by(Grid) %>% summarise(n_lists = n_distinct(group.id))
+
+kl.use_wet_gridf <- left_join(kl.use_wet_grid,kl.use_wet_grid_lists, by = c('Grid' = 'Grid'))
+
+kl.use_wet_gridf1 <-  kl.use_wet_gridf %>% mutate(frequency_grid = n*100/n_lists) %>% group_by(SPECIES.NAME) %>% summarise(Percentage_grids_Atlas = n()*100/length(unique(kl.use_wet$Grid)),Average_frequency_Atlas = sum(frequency_grid/length(unique(kl.use_wet$Grid)))) %>% arrange(desc(Average_frequency_Atlas))
+
+
+sp_freq_grid_average <- left_join(kl.use_wet_gridf1, al_nonatlas_wet_gridf1, by = c('SPECIES.NAME' = 'SPECIES.NAME'))
+
+
+sp_freq_grid_average <- sp_freq_grid_average %>% mutate(diff_freq = Average_frequency_Atlas - Average_frequency_eBird, diff_grid = Percentage_grids_Atlas - Percentage_grids_eBird) %>% arrange(desc(diff_freq))
+
+sp_freq_grid_average[,-1] <- round(sp_freq_grid_average[,-1],2)
+
+sp_freq_grid_average1 <- sp_freq_grid_average %>% slice(c(1:10,(n()-10):n())) %>% select(SPECIES.NAME) %>% separate(SPECIES.NAME, c('Common Name','Scientific Name'), sep = '\\| ')
+
+tab_wet_grid <- data.frame(cbind(sp_freq_grid_average1[1:10,1], sp_freq_grid_average1[11:20,1]))
+
+colnames(tab_wet_grid) <- c('**Under Represented**', '**Over Represented**')
+
+kable(tab_wet_grid, format = 'pandoc')
+
+
+plot(sp_freq_grid_average$Average_frequency_Atlas,sp_freq_grid_average$Average_frequency_eBird, xlab = 'Atlas Frequency', ylab = 'eBird Frequency', xlim = c(0,100), ylim = c(0,100))
+abline(a = 0, b = 1, col = 'red')
+
+#plot(sp_freq_grid_average$Percentage_grids_Atlas,sp_freq_grid_average$Percentage_grids_eBird, xlab = 'Percentage Grids in Atlas', ylab = 'Percebtage Grids in eBird', xlim = c(0,100), ylim = c(0,100))
+#abline(a = 0, b = 1, col = 'red')
+
+  
+#plot(sp_freq_grid_average$diff_grid,sp_freq_grid_average$diff_freq, xlab = 'Difference in grids reported (Atlas-eBird)', ylab = 'Difference in #frequencies (Atlas- eBird)')
+#abline(h = 0, col = 'red')
+#abline(v = 0, col = 'red')
+```
+
+###Dry
+
+##District 
+
+```{r data dry, echo=FALSE, warning=F}
+
+
+kl.use <- read.csv('C:/Users/Abinand Reddy/Desktop/mysore bird atlas/Kerala bird atlas/Print ready maps/KBA-Alappuzha-records.csv')
+
+kl.use <- kl.use[kl.use$APPROVED == 1,]
+
+kl.use$Grid <- al_grid$Grid[match(kl.use$Subcell, al_grid$Sub_cell_id)]
+
+all.lists <-all %>% group_by(group.id) %>% slice(1) %>% ungroup()
+
+al_nonatlas_lists_dry1 <- all.lists %>% 
+  filter(SUBNATIONAL2_CODE == 'IN-KL-AL' & !SAMPLING.EVENT.IDENTIFIER %in% kl.use$SAMPLING.EVENT.IDENTIFIER & DURATION.MINUTES > 10 & CATEGORY %in% c("species","domestic","issf","form") & APPROVED == 1 & ALL.SPECIES.REPORTED ==1) %>%
+  separate(upload.month, c('year', 'month'), sep = '-',remove = FALSE)  %>% filter(month %in% c('01','02','03')) 
+
+al_nonatlas_lists_dry <- al_nonatlas_lists_dry1
+
+
+coordinates(al_nonatlas_lists_dry) <- ~LONGITUDE+LATITUDE
+
+proj4string(al_nonatlas_lists_dry) <- proj4string(polys)
+
+al_nonatlas_dry_gr <- over(polys,al_nonatlas_lists_dry, returnList = T)
+
+
+al_nonatlas_dry_gr1 <- do.call(rbind,al_nonatlas_dry_gr)
+
+al_nonatlas_dry_gr1$grid <- rownames(al_nonatlas_dry_gr1)
+
+al_nonatlas_dry_gr2 <- al_nonatlas_dry_gr1 %>% separate(grid, c('Grid','no'), sep = ']', remove = T)
+
+al_nonatlas_dry_gr2$Grid <- paste(al_nonatlas_dry_gr2$Grid,']', sep = '')
+
+al_nonatlas_dry_gr3 <- al_nonatlas_dry_gr2 %>% select(group.id, Grid)
+
+al_nonatlas_dry <- left_join(al_nonatlas_dry_gr3, all, by = c('group.id' = 'group.id')) 
+
+al_nonatlas_dryd <- al_nonatlas_dry %>% group_by(group.id) %>% distinct(SPECIES.NAME) %>% ungroup()
+
+species_freq <- al_nonatlas_dryd %>% group_by(SPECIES.NAME) %>% summarise(n_eBird = n()) %>% arrange(desc(n_eBird))
+
+species_freq$frequency_eBird <- species_freq$n_eBird*100/length(unique(al_nonatlas_dryd$group.id))
+
+kl.use_dry <- kl.use %>% filter(year == 2016)
+
+kl.use_dry_freq <- kl.use_dry %>% group_by(SPECIES.NAME) %>% summarise(n_Atlas = n()) %>% arrange(desc(n_Atlas))
+
+kl.use_dry_freq$frequency_Atlas <- kl.use_dry_freq$n_Atlas*100/length(unique(kl.use_dry$group.id))
+
+sp_freq_district <- left_join(kl.use_dry_freq,species_freq, by = c('SPECIES.NAME' = 'SPECIES.NAME'))
+
+sp_freq_district <- sp_freq_district %>% mutate(diff_district = frequency_Atlas - frequency_eBird) %>% arrange(desc(diff_district))
+
+sp_freq_district <- sp_freq_district[,c(1,2,4,3,5,6)]
+
+sp_freq_district[,-1] <- round(sp_freq_district[,-1],2)
+
+
+p_district_Atlas <- ggplot()+
+  geom_rect(aes(xmin = 76.09375,ymin  = 9.0625,xmax = 76.5,ymax = 10), fill = 'light blue') +
+  geom_polygon(data = map_al.df, aes(x=long, y=lat, group=group), fill = 'White') +
+  geom_polygon(data = negal.df, aes(x=long, y=lat, group = group), fill = 'White') +
+  geom_path(data = map_al.df, aes(x=long, y=lat, group=group)) +
+  geom_path(data = negal.df, aes(x=long, y=lat, group=group)) +
+  geom_path(data = spsdf, aes(x=long, y=lat, group=group), col = 'white') +
+  geom_point(data = kl.use_dry, aes(x = LONGITUDE,y = LATITUDE)) +
+  scale_x_continuous(expand = c(0,0)) +
+  scale_y_continuous(expand = c(0,0)) +
+  theme_bw()+
+  theme(axis.line=element_blank(),
+        axis.text.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  ggtitle('Atlas Lists') +
+  coord_map()
+
+
+
+p_district_eBird <- ggplot()+
+  geom_rect(aes(xmin = 76.09375,ymin  = 9.0625,xmax = 76.5,ymax = 10), fill = 'light blue') +
+  geom_polygon(data = map_al.df, aes(x=long, y=lat, group=group), fill = 'White') +
+  geom_polygon(data = negal.df, aes(x=long, y=lat, group = group), fill = 'White') +
+  geom_path(data = map_al.df, aes(x=long, y=lat, group=group)) +
+  geom_path(data = negal.df, aes(x=long, y=lat, group=group)) +
+  geom_path(data = spsdf, aes(x=long, y=lat, group=group), col = 'white') +
+  geom_point(data = al_nonatlas_lists_dry1, aes(x = LONGITUDE,y = LATITUDE)) +
+  scale_x_continuous(expand = c(0,0)) +
+  scale_y_continuous(expand = c(0,0)) +
+  theme_bw()+
+  theme(axis.line=element_blank(),
+        axis.text.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  ggtitle('eBird Lists') +
+  coord_map()
+```
+
+<div class = 'col2'>
+```{r district maps dry, echo=FALSE, fig.height=8, warning=FALSE}
+p_district_eBird
+p_district_Atlas
+
+```
+</div>
+
+```{r district chart dry, echo = FALSE, warning = FALSE}
+
+sp_freq_district1 <- sp_freq_district %>% slice(c(1:10,(n()-10):n())) %>% select(SPECIES.NAME)%>% separate(SPECIES.NAME, c('Common Name','Scientific Name'), sep = '\\| ')
+
+tab_dry <- data.frame(cbind(sp_freq_district1[1:10,1], sp_freq_district1[11:20,1]))
+
+colnames(tab_dry) <- c('**Under Represented**', '**Over Represented**')
+
+kable(tab_dry, format = 'pandoc')
+
+plot(sp_freq_district$frequency_Atlas,sp_freq_district$frequency_eBird, xlab = 'Atlas Frequency', ylab = 'eBird Frequency', xlim = c(0,100), ylim = c(0,100))
+abline(a = 0, b = 1, col = 'red')
+
+```
+
+##Grid level
+
+<div class = 'col2'>
+```{r district grid maps dry, echo=FALSE, fig.height=8, warning=FALSE}
+
+polysdf <- fortify(polys)
+
+p_grid_eBird <- ggplot()+
+  geom_rect(aes(xmin = 76.09375,ymin  = 9.0625,xmax = 76.5,ymax = 10), fill = 'light blue') +
+  geom_polygon(data = map_al.df, aes(x=long, y=lat, group=group), fill = 'White') +
+  geom_polygon(data = negal.df, aes(x=long, y=lat, group = group), fill = 'White') +
+  geom_path(data = map_al.df, aes(x=long, y=lat, group=group)) +
+  geom_path(data = negal.df, aes(x=long, y=lat, group=group)) +
+  geom_path(data = spsdf, aes(x=long, y=lat, group=group), col = 'white') +
+  geom_path(data = polysdf, aes(x=long, y=lat, group=group), col = 'dark red') +
+  geom_point(data = al_nonatlas_lists_dry1, aes(x = LONGITUDE,y = LATITUDE)) +
+  scale_x_continuous(expand = c(0,0)) +
+  scale_y_continuous(expand = c(0,0)) +
+  theme_bw()+
+  theme(axis.line=element_blank(),
+        axis.text.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  ggtitle('eBird Lists') +
+  coord_map()
+
+p_grid_Atlas <- ggplot()+
+  geom_rect(aes(xmin = 76.09375,ymin  = 9.0625,xmax = 76.5,ymax = 10), fill = 'light blue') +
+  geom_polygon(data = map_al.df, aes(x=long, y=lat, group=group), fill = 'White') +
+  geom_polygon(data = negal.df, aes(x=long, y=lat, group = group), fill = 'White') +
+  geom_path(data = map_al.df, aes(x=long, y=lat, group=group)) +
+  geom_path(data = negal.df, aes(x=long, y=lat, group=group)) +
+  geom_path(data = spsdf, aes(x=long, y=lat, group=group), col = 'white') +
+  geom_path(data = polysdf, aes(x=long, y=lat, group=group), col = 'dark red') +
+  geom_point(data = kl.use_dry, aes(x = LONGITUDE,y = LATITUDE)) +
+  scale_x_continuous(expand = c(0,0)) +
+  scale_y_continuous(expand = c(0,0)) +
+  theme_bw()+
+  theme(axis.line=element_blank(),
+        axis.text.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  ggtitle('Atlas Lists') +
+  coord_map()
+
+p_grid_Atlas
+p_grid_eBird
+
+```
+</div>
+
+
+
+```{r, warning=F, echo = F}
+al_nonatlas_dry_grid <- al_nonatlas_dry %>% group_by(Grid,group.id) %>% distinct(SPECIES.NAME) %>% ungroup() %>% group_by(SPECIES.NAME,Grid) %>% summarise(n = n())
+
+al_nonatlas_dry_grid_lists <- al_nonatlas_dry %>% group_by(Grid) %>% summarise(n_lists = n_distinct(group.id))
+
+al_nonatlas_dry_gridf <- left_join(al_nonatlas_dry_grid,al_nonatlas_dry_grid_lists, by = c('Grid' = 'Grid'))
+
+al_nonatlas_dry_gridf1 <- al_nonatlas_dry_gridf %>% mutate(frequency_grid = n*100/n_lists) %>% group_by(SPECIES.NAME) %>% summarise(Percentage_grids_eBird = n()*100/length(unique(al_nonatlas_dry_gridf$Grid)), Average_frequency_eBird = sum(frequency_grid/length(unique(al_nonatlas_dry_gridf$Grid)))) %>% arrange(desc(Average_frequency_eBird))
+
+kl.use_dry_grid <- kl.use_dry %>% group_by(SPECIES.NAME,Grid) %>% summarise(n = n())
+
+kl.use_dry_grid_lists <- kl.use_dry %>% group_by(Grid) %>% summarise(n_lists = n_distinct(group.id))
+
+kl.use_dry_gridf <- left_join(kl.use_dry_grid,kl.use_dry_grid_lists, by = c('Grid' = 'Grid'))
+
+kl.use_dry_gridf1 <-  kl.use_dry_gridf %>% mutate(frequency_grid = n*100/n_lists) %>% group_by(SPECIES.NAME) %>% summarise(Percentage_grids_Atlas = n()*100/length(unique(kl.use_dry$Grid)),Average_frequency_Atlas = sum(frequency_grid/length(unique(kl.use_dry$Grid)))) %>% arrange(desc(Average_frequency_Atlas))
+
+
+sp_freq_grid_average <- left_join(kl.use_dry_gridf1, al_nonatlas_dry_gridf1, by = c('SPECIES.NAME' = 'SPECIES.NAME'))
+
+
+sp_freq_grid_average <- sp_freq_grid_average %>% mutate(diff_freq = Average_frequency_Atlas - Average_frequency_eBird, diff_grid = Percentage_grids_Atlas - Percentage_grids_eBird) %>% arrange(desc(diff_freq))
+
+sp_freq_grid_average[,-1] <- round(sp_freq_grid_average[,-1],2)
+
+sp_freq_grid_average1 <- sp_freq_grid_average %>% slice(c(1:10,(n()-10):n())) %>% select(SPECIES.NAME)%>% separate(SPECIES.NAME, c('Common Name','Scientific Name'), sep = '\\| ')
+
+tab_dry_grid <- data.frame(cbind(sp_freq_grid_average1[1:10,1], sp_freq_grid_average1[11:20,1]))
+
+colnames(tab_dry_grid) <- c('**Under Represented**', '**Over Represented**')
+
+kable(tab_dry_grid, format = 'pandoc')
+
+plot(sp_freq_grid_average$Average_frequency_Atlas,sp_freq_grid_average$Average_frequency_eBird, xlab = 'Atlas Frequency', ylab = 'eBird Frequency', xlim = c(0,100), ylim = c(0,100))
+abline(a = 0, b = 1, col = 'red')
+
+plot(sp_freq_grid_average$Percentage_grids_Atlas,sp_freq_grid_average$Percentage_grids_eBird, xlab = 'Percentage Grids in Atlas', ylab = 'Percebtage Grids in eBird', xlim = c(0,100), ylim = c(0,100))
+abline(a = 0, b = 1, col = 'red')
+
+  
+plot(sp_freq_grid_average$diff_grid,sp_freq_grid_average$diff_freq, xlab = 'Difference in grids reported (Atlas-eBird)', ylab = 'Difference in frequencies (Atlas- eBird)')
+abline(h = 0, col = 'red')
+abline(v = 0, col = 'red')
+
+
+kable(data.frame(Sampling = c('Atlas Wet Season', 'eBird Wet Season', 'Atlas Dry Season','eBird Dry Season'), Lists = c(length(unique(kl.use_wet$SAMPLING.EVENT.IDENTIFIER)),length(unique(al_nonatlas_wet$group.id)),length(unique(kl.use_dry$SAMPLING.EVENT.IDENTIFIER)),length(unique(al_nonatlas_dry$group.id))), Richness = c(length(unique(kl.use_wet$SPECIES.NAME)),length(unique(al_nonatlas_wet$SPECIES.NAME)),length(unique(kl.use_dry$SPECIES.NAME)),length(unique(al_nonatlas_dry$SPECIES.NAME)))), format = 'markdown')
+
+
+
+
+```
+
+
+```{r birds not in atlas, warning= F, echo=F}
+
+eBird_spcs_wet <- al_nonatlas_wet %>% filter(!SPECIES.NAME %in% kl.use_wet$SPECIES.NAME & CATEGORY %in% c("species","domestic","issf","form"))
+
+unique(eBird_spcs_wet$SPECIES.NAME)
+
+```

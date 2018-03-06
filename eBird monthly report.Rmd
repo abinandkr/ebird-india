@@ -1,0 +1,210 @@
+---
+title: "eBird India monthly report - November 2016"
+output: html_document
+---
+
+<style>
+  .col2 {
+    columns: 2 250px;         /* number of columns and width in pixels*/
+    -webkit-columns: 2 250px; /* chrome, safari */
+    -moz-columns: 2 250px;    /* firefox */
+  }
+  .col3 {
+    columns: 3 100px;
+    -webkit-columns: 3 100px;
+    -moz-columns: 3 100px;
+  }
+</style>
+
+```{r data, ignore=TRUE, include=FALSE}
+library(dplyr)
+library(ggplot2)
+library(rgdal)
+library(raster)
+library(RColorBrewer)
+library(knitr)
+library(pander)
+
+
+load("C:/Users/Abinand Reddy/Desktop/Thesis/NCF/eBird/All-eBird-India-data-2016-12-06.RData")
+
+all$observer <- gsub('[[:alpha:]]', '', all$OBSERVER.ID)
+
+states <- read.csv("C:/Users/Abinand Reddy/Desktop/Thesis/NCF/eBird/state_codes.csv")
+
+ind <- readOGR('C:/Users/Abinand Reddy/Desktop/Thesis/NCF/eBird/District shape file eBird code', layer = 'Distrits with eBird code')
+
+thismonth <- '2016-11'
+lastyearmonth <- '2015-11'
+lastmonth <- '2016-10'
+nextmonth <- '2016-12'
+threemonths <- '2016-09'
+
+```
+
+##Number of lists
+
+```{r, echo=FALSE, warning=F}
+number_lists <- all %>% filter(year.month > '2013-12' & year.month <= thismonth) %>% group_by(year.month) %>% summarise(n_lists = n_distinct(SAMPLING.EVENT.IDENTIFIER))
+
+
+number_lists$year <- do.call('rbind',strsplit(number_lists$year.month, '-'))[,1]
+
+number_lists$month <- do.call('rbind',strsplit(number_lists$year.month, '-'))[,2]
+
+number_lists1 <- with(number_lists, expand.grid(month = levels(factor(number_lists$month)), year = levels(factor(number_lists$year))))
+
+number_lists2 <- merge(number_lists,number_lists1, all.y = T)
+
+
+l <- ggplot(number_lists2, aes(x = month, y = n_lists, color = year, group = year, shape = year))+
+  geom_line() +
+  geom_point() +
+  ylab('Number of lists')+
+  theme_minimal()
+l
+
+```
+
+## Users per State - November 2016
+
+```{r users, echo=FALSE, fig.height = 8, results= 'asis'}
+
+state_wise_users <- all %>% group_by(SUBNATIONAL1_CODE,upload.month) %>% summarise(npeople = n_distinct(observer)) 
+
+state_wise_two_months_users <- state_wise_users %>% filter(upload.month == lastyearmonth| upload.month == thismonth)
+
+state_wise_two_months_users$state <- states$state[match(state_wise_two_months_users$SUBNATIONAL1_CODE, states$SUBNATIONAL1_CODE)]
+
+state_wise_two_months_users1 <- with(state_wise_two_months_users,expand.grid(state = levels(factor(states$state)), upload.month = levels(factor(upload.month))))
+
+state_wise_two_months_users2 <- merge(state_wise_two_months_users,state_wise_two_months_users1,all.y = T)
+
+state_wise_two_months_users3 <- state_wise_two_months_users2 %>% arrange(upload.month, npeople)
+
+
+state_wise_two_months_users3$npeople[is.na(state_wise_two_months_users3$npeople)== T] <- 0
+
+p <- ggplot(state_wise_two_months_users3, aes(x = reorder(state, npeople), y= npeople, fill = upload.month))+
+  geom_bar(stat = 'identity', position = position_dodge(), colour = 'black', width = 0.75) +
+  scale_fill_manual(values = c('white','light blue'), labels = c('2015','2016'))+
+  guides(fill = guide_legend(title = ''))+
+  scale_y_continuous(sec.axis = dup_axis())+
+  ylab('Users') +
+  xlab('')+
+  coord_flip()+
+  theme_minimal()
+
+p
+
+
+```
+
+
+
+##Lists per State - November 2016
+
+
+```{r lists, warning=FALSE, echo = FALSE,  fig.height = 8}
+
+state_wise_lists <- all %>% group_by(SUBNATIONAL1_CODE,year.month, ALL.SPECIES.REPORTED == 1) %>% summarise(clists = n_distinct(SAMPLING.EVENT.IDENTIFIER)) %>% group_by(SUBNATIONAL1_CODE,year.month) %>% mutate(nlists = sum(clists)) %>% filter(`ALL.SPECIES.REPORTED == 1` == T)
+
+state_wise_two_months_lists <- state_wise_lists %>% filter(year.month == lastyearmonth| year.month == thismonth)
+
+state_wise_two_months_lists$state <- states$state[match(state_wise_two_months_lists$SUBNATIONAL1_CODE, states$SUBNATIONAL1_CODE)]
+
+state_wise_two_months_lists1 <- with(state_wise_two_months_lists,expand.grid(state = levels(factor(states$state)), year.month = levels(factor(year.month))))
+
+state_wise_two_months_lists2 <- merge(state_wise_two_months_lists,state_wise_two_months_lists1,all.y = T)
+
+state_wise_two_months_lists3 <- state_wise_two_months_lists2 %>% arrange(year.month, nlists)
+
+state_wise_two_months_lists3$nlists[is.na(state_wise_two_months_lists3$nlists)== T] <- 0
+
+state_wise_two_months_lists3$clists[state_wise_two_months_lists3$year.month == lastyearmonth] <- NA
+
+
+p <- ggplot(state_wise_two_months_lists3, aes(x = reorder(state, nlists), y = nlists, fill = year.month))+
+  geom_bar(stat = 'identity', position = position_dodge(), colour = 'black', width = 0.75) +
+  scale_fill_manual(values = c('white','coral'), labels = c('2015','2016'))+
+  geom_text(aes(x = reorder(state, nlists), y = nlists + 300, label = clists))+
+  guides(fill = guide_legend(title = ''))+
+  scale_y_continuous(sec.axis = dup_axis())+
+  ylab('lists') +
+  xlab('')+
+  coord_flip()+
+  theme_minimal()
+p
+
+```
+
+The graph shows the number of lists uploaded by users per state. Shared lists are counted as multiple lists uploaded by multiple users and not as a single list. Numbers next to bars represent the number of the lists, that are complete.
+
+##District Covereage per State - November 2016
+
+```{r, fig.height=8, warning=FALSE, echo=F}
+dist <- ind@data
+
+dist <- dist %>% group_by(ST_NM) %>% summarise(n_dist = n_distinct(district10))
+
+numd <- all %>% filter(year.month %in% c(thismonth,lastyearmonth)) %>% group_by(year.month,SUBNATIONAL1_CODE) %>% filter(!is.na(SUBNATIONAL2_CODE)) %>% summarise(dis = n_distinct(SUBNATIONAL2_CODE))
+
+
+
+numd$state <- states$state[match(numd$SUBNATIONAL1_CODE, states$SUBNATIONAL1_CODE)]
+
+numd <- left_join(numd,dist, by = c("state"="ST_NM"))
+
+
+numd1 <- with(numd,expand.grid(state = levels(factor(states$state)), year.month = levels(factor(year.month))))
+
+colnames(numd)[4] <- 'state'
+
+numd2 <- merge(numd,numd1,all.y = T)
+
+numd2 <- numd2 %>% mutate(cov = round(dis/n_dist,2))
+
+numd2$cov[is.na(numd2$cov)== T] <- 0
+
+numd2 <- numd2[!numd2$state == 'India',]
+
+
+p <- ggplot(numd2, aes(x = reorder(state, cov), y = cov, fill = year.month))+
+  geom_bar(stat = 'identity', position = position_dodge(), colour = 'black', width = 0.75) +
+  scale_fill_manual(values = c('white','darkolivegreen3'), labels = c('2015','2016'))+
+  guides(fill = guide_legend(title = ''))+
+  scale_y_continuous(breaks = c(0,.25,.50,.75,1),labels = scales::percent,sec.axis = dup_axis())+
+  ylab('Percentage of Districts Covered') +
+  xlab('')+
+  coord_flip()+
+  theme_minimal()
+p
+
+
+```
+
+
+
+##User Activity - November 2016
+
+```{r User activity, echo=FALSE, warning=FALSE}
+all1 <- all %>% filter(upload.month < nextmonth) %>% group_by(observer) %>% mutate(f_upload = min(upload.month,na.rm = T))
+
+
+us_act <- rbind(c('New Users November 2016', length(unique(all1$observer[all1$f_upload == thismonth]))),
+      c('All Users November 2016', length(unique(all1$observer[all1$upload.month == thismonth]))),
+      c('All Users since September 2016 (Past 3 months)', length(unique(all1$observer[all1$upload.month >= threemonths]))),
+      c('All Users', length(unique(all1$observer))))
+
+
+colnames(us_act) <- c('Activity','Users')
+
+kable(us_act)
+
+```
+
+
+
+
+
+**Data downloaded**: 2016-12-06

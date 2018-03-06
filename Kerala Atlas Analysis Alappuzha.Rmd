@@ -1,0 +1,307 @@
+---
+title: "Kerala atlas analysis Alappuzha"
+output: html_document
+---
+
+```{r, echo = FALSE, warning = FALSE}
+
+library(ggplot2)
+library(raster)
+library(dplyr)
+library(tidyr)
+library(RColorBrewer)
+library(rgeos)
+
+load("C:/Users/Abinand Reddy/Desktop/Thesis/NCF/eBird/All-eBird-India-data-2016-07-06.RData")
+
+ind_d <- getData('GADM',country = 'IND', level = 2)
+
+map_al1 <- ind_d[ind_d@data$NAME_1=="Kerala",]
+
+map_al <- ind_d[ind_d@data$NAME_2=="Alappuzha",]
+
+al_grid <- read.csv('C:/Users/Abinand Reddy/Desktop/mysore bird atlas/Kerala bird atlas/Final files/Alappuzha/cells_alappuzha.csv')
+
+kl.use <- read.csv('C:/Users/Abinand Reddy/Desktop/mysore bird atlas/Kerala bird atlas/Print ready maps/KBA-Alappuzha-records.csv')
+
+kl.use <- kl.use[kl.use$APPROVED == 1,]
+
+
+al_nonatlas <- all %>% 
+  filter(SUBNATIONAL2_CODE == 'IN-KL-AL' & !SAMPLING.EVENT.IDENTIFIER %in% kl.use$SAMPLING.EVENT.IDENTIFIER & DURATION.MINUTES > 10 & CATEGORY %in% c("species","domestic","issf","form") & APPROVED == 1 & ALL.SPECIES.REPORTED ==1) %>%
+  separate(upload.month, c('year', 'month'), sep = '-',remove = FALSE) %>%
+  filter(month %in% c('07','08','09'))  
+
+
+al_grid1 <- with(al_grid, aggregate(cbind(Longitude,Latitude)~Sub_cell_id, FUN = min))
+
+al_grid1$to.lat <- al_grid1$Latitude + 0.0625
+
+al_grid1$to.long <- al_grid1$Longitude + 0.0625
+
+al_grid1$Grid <- al_grid$Grid[match(al_grid1$Sub_cell_id,al_grid$Sub_cell_id)]
+
+## Species Richness maps
+
+
+al_grid1$richness_2015 <- with(kl.use[kl.use$year == 2015,], tapply(SPECIES.NAME, Subcell, function(x) length(unique(x))))
+
+al_grid1$richness_2016 <- with(kl.use[kl.use$year == 2016,], tapply(SPECIES.NAME, Subcell, function(x) length(unique(x))))
+
+al_grid2 <- with(al_grid1, aggregate(cbind(Longitude,Latitude,to.lat,to.long,richness_2015,richness_2016)~Grid, FUN = mean))
+
+al_grid2
+
+
+Kochi <- c(76.2673,9.9312)
+Alappuzha <- c(76.3388,9.4981)
+Kottayam <- c(76.5222,9.5916)
+
+map_al1 <- ind_d[ind_d@data$NAME_1 == 'Kerala',]
+map_al <- ind_d[ind_d@data$NAME_2 == 'Alappuzha',]
+
+
+cit <- rbind(Kochi,Alappuzha,Kottayam)
+colnames(cit) <- c('lon','lat')
+
+cit <- data.frame(cit)
+
+out_x <- c(0,2,2,3,3,4,4,5,5,6,6,7,7,6,6,3,3,2,2,1,1,0,0)
+out_y <- c(0,0,-2,-2,-5,-5,-7,-7,-8,-8,-9,-9,-12,-12,-13,-13,-11,-11,-9,-9,-5,-5,0)
+
+al_out_x <- 76.25 + 0.0625*out_x
+al_out_y <- 9.875 + 0.0625*out_y
+
+outg <- cbind(al_out_x,al_out_y)
+q = Polygon(outg)
+qs = Polygons(list(q),1)
+sqs = SpatialPolygons(list(qs))
+proj4string(sqs) <- proj4string(map_al)
+grO <- gIntersection(map_al1, sqs, byid = T)
+
+
+boun_x <- c(-2.5,5,5,6,6,7,7,-2.5,-2.5)
+boun_y <- c(2,2,-6,-6,-8,-8,-13,-13,2)
+
+al_boun_x <- 76.25 + 0.0625*boun_x
+al_boun_y <- 9.875 + 0.0625*boun_y
+
+
+al_boun_x
+
+xym <- cbind(al_boun_x,al_boun_y)
+p = Polygon(xym)
+ps = Polygons(list(p),1)
+sps = SpatialPolygons(list(ps))
+proj4string(sps) <- proj4string(map_al)
+grC <- gIntersection(map_al1, sps, byid = T)
+grC1 <- gIntersection(map_al, sps, byid = T)
+
+
+minCoord <- c(min(al_grid$Longitude),min(al_grid$Latitude)) + 0.0625/2 # minimum of the state bounding box
+gridSize <- c(0.0625, 0.0625) # grid cell size in degrees
+noCells <- (c(max(al_grid$Longitude),max(al_grid$Latitude))- c(min(al_grid$Longitude),min(al_grid$Latitude)))/gridSize # specifies dimensions of grid
+gr <- GridTopology(minCoord, gridSize, noCells)
+gr <- as(as(SpatialGrid(gr), "SpatialPixels"), "SpatialPolygons")
+proj4string(gr) <- proj4string(map_al)
+
+mycols <- c("#FFFFFF", brewer.pal(6, "YlGn"))
+lower.bounds <- c(0, 1, 11, 21, 31, 41,51,61) ## so that first two classes (<5 lists) are excluded in further analysis
+al_grid2$grid.col <- cut(al_grid2$richness_2015, lower.bounds, labels=mycols,include.lowest=TRUE, right=FALSE , border = NA)
+
+
+geo_grid <- function(lt){
+  long1 <- as.numeric(lt[1])
+  long2 <- as.numeric(lt[4])
+  lat1 <- as.numeric(lt[2])
+  lat2 <- as.numeric(lt[3])
+  t <- matrix(c(long1,lat1,long1,lat2,long2,lat2,long2,lat1,long1,lat1), ncol = 2,byrow = T)
+  t
+}
+
+mpal <- list()
+
+for(i in 1:nrow(al_grid2)){
+  ts <- Polygons(list(Polygon(geo_grid(al_grid2[i,2:5]))), al_grid2$Grid[i])
+  mpal <- c(mpal,ts)
+}
+
+polys <- SpatialPolygons(mpal)
+
+proj4string(polys) = proj4string(map_al)
+
+attr <- data.frame(al_grid2$richness_2015, row.names = al_grid2$Grid)
+polydf <- SpatialPolygonsDataFrame(polys,attr)
+polydf@data$colour <- as.character(al_grid2$grid.col)
+polydf@data$id <- al_grid2$Grid
+poly <- as(polydf, 'SpatialPolygons')
+
+tp_x <- c(76.33,76.33,76.46,76.46,76.33)
+tp_y <- c(9.51,9.75,9.75,9.51,9.51)
+
+tpd <- cbind(tp_x,tp_y)
+tp = Polygon(tpd)
+tp = Polygons(list(tp),1)
+tps = SpatialPolygons(list(tp))
+proj4string(tps) <- proj4string(map_al)
+
+al_grid2$richness_2015_discrete <- cut(al_grid2$richness_2015,c(0,1,10,20,30,40,50,60))
+al_grid2$richness_2016_discrete <- cut(al_grid2$richness_2016,c(0,1,10,20,30,40,50,60))
+
+grClip <- gIntersection(polys, map_al1 + tps, byid = T, drop_not_poly = T)
+grClip.df <- fortify(grClip)
+grClip.df$id <- unlist(lapply(strsplit(grClip.df$id," "), function(x) x[1]))
+grClip1 <- left_join(grClip.df, al_grid2, by=c('id'= 'Grid'))
+negal <- (grC - map_al)
+
+map_al.df <- fortify(map_al)
+negal.df <- fortify(negal)
+spsdf<- fortify(sps)
+
+
+p2015 <- ggplot()+
+  geom_rect(aes(xmin = 76.09375,ymin  = 9.0625,xmax = 76.5,ymax = 10), fill = 'light blue') +
+  geom_polygon(data = map_al.df, aes(x=long, y=lat, group=group), fill = 'White') +
+  geom_polygon(data = grClip1, aes(x=long, y=lat, fill=richness_2015_discrete, group=group)) +
+  geom_polygon(data = negal.df, aes(x=long, y=lat, group = group), fill = 'White') +
+  geom_path(data = map_al.df, aes(x=long, y=lat, group=group)) +
+  geom_path(data = negal.df, aes(x=long, y=lat, group=group)) +
+  geom_path(data = spsdf, aes(x=long, y=lat, group=group), col = 'white') +
+  scale_fill_brewer(palette = "YlGn", guide = F) + 
+  scale_x_continuous(expand = c(0,0)) +
+  scale_y_continuous(expand = c(0,0)) +
+  theme_bw()+
+  theme(axis.line=element_blank(),
+        axis.text.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.margin=unit(c(-0.2,0.1,-0.2,-0.1), "cm"),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  geom_point(data = cit, aes(x = lon,y = lat ),size = 6, shape = 15, show.legend = F) +
+  coord_map()
+
+p2015
+
+p2016 <- ggplot()+
+  geom_rect(aes(xmin = 76.1,ymin  = 9.0625,xmax = 76.5,ymax = 10), fill = 'light blue') +
+  geom_polygon(data = map_al.df, aes(x=long, y=lat, group=group), fill = 'White') +
+  geom_polygon(data = grClip1, aes(x=long, y=lat, fill=richness_2016_discrete, group=group)) +
+  geom_polygon(data = negal.df, aes(x=long, y=lat, group = group), fill = 'White') +
+  geom_path(data = map_al.df, aes(x=long, y=lat, group=group)) +
+  geom_path(data = negal.df, aes(x=long, y=lat, group=group)) +
+  geom_path(data = spsdf, aes(x=long, y=lat, group=group), col = 'white') +
+  scale_x_continuous(expand = c(0,0)) +
+  scale_y_continuous(expand = c(0,0)) +
+  scale_fill_brewer(palette = "YlGn", guide = F) +
+  theme_bw()+
+  theme(axis.line=element_blank(),
+        axis.text.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        plot.margin=unit(c(-0.2,-0.1,-0.2,0.1), "cm"),
+        panel.background = element_blank())+
+  geom_point(data = cit, aes(x = lon,y = lat ),size = 6, shape = 15, show.legend = F) +
+  coord_map()
+
+
+al_nonatlas <- all %>% 
+  filter(SUBNATIONAL2_CODE == 'IN-KL-AL' & !SAMPLING.EVENT.IDENTIFIER %in% kl.use$SAMPLING.EVENT.IDENTIFIER & DURATION.MINUTES > 10 & CATEGORY %in% c("species","domestic","issf","form") & APPROVED == 1 & ALL.SPECIES.REPORTED ==1) %>%
+  separate(upload.month, c('year', 'month'), sep = '-',remove = FALSE) %>%
+  filter(month %in% c('07','08','09'))  
+
+
+
+coordinates(al_nonatlas) <- ~LONGITUDE+LATITUDE
+
+proj4string(al_nonatlas) <- proj4string(polys)
+
+al_nonatlas_gr <- over(polys,al_nonatlas, returnList = T)
+
+al_nonatlas_gr1 <- do.call(rbind,al_nonatlas_gr)
+
+al_nonatlas_gr1$grid <- rownames(al_nonatlas_gr1)
+
+al_nonatlas_gr2 <- al_nonatlas_gr1 %>% separate(grid, c('Grid','no'), sep = ']', remove = T)
+
+al_nonatlas_gr3 <- al_nonatlas_gr2[,-40] 
+  
+al_nonatlas_gr3$Grid <- paste(al_nonatlas_gr3$Grid,']', sep = '')
+
+al_nonatlas_grf <- al_nonatlas_gr3 %>% group_by(Grid) %>% summarise(lists = n_distinct(SAMPLING.EVENT.IDENTIFIER), richness = n_distinct(SPECIES.NAME))
+
+al_nonatlas_grf
+
+al_nonatlas_grf_map <- left_join(grClip.df, al_nonatlas_grf, by=c('id'= 'Grid'))
+
+pnonatls_lists <- ggplot()+
+  geom_rect(aes(xmin = 76.1,ymin  = 9.0625,xmax = 76.5,ymax = 10), fill = 'light blue') +
+  geom_polygon(data = map_al.df, aes(x=long, y=lat, group=group), fill = 'White') +
+  geom_polygon(data = al_nonatlas_grf_map, aes(x=long, y=lat, fill= lists, group=group)) +
+  geom_polygon(data = negal.df, aes(x=long, y=lat, group = group), fill = 'White') +
+  geom_path(data = map_al.df, aes(x=long, y=lat, group=group)) +
+  geom_path(data = negal.df, aes(x=long, y=lat, group=group)) +
+  geom_path(data = spsdf, aes(x=long, y=lat, group=group), col = 'white') +
+  scale_x_continuous(expand = c(0,0)) +
+  scale_y_continuous(expand = c(0,0)) +
+  scale_fill_gradientn(colours = c('white','coral','dark red'), values = c(0,.25,1))   +
+  theme_bw()+
+  theme(axis.line=element_blank(),
+        axis.text.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        plot.margin=unit(c(-0.2,-0.1,-0.2,0.1), "cm"),
+        panel.background = element_blank())+
+  geom_point(data = cit, aes(x = lon,y = lat ),size = 6, shape = 15, show.legend = F) +
+  coord_map()
+
+pnonatls_lists
+
+
+pnonatls_richness <- ggplot()+
+  geom_rect(aes(xmin = 76.1,ymin  = 9.0625,xmax = 76.5,ymax = 10), fill = 'light blue') +
+  geom_polygon(data = map_al.df, aes(x=long, y=lat, group=group), fill = 'White') +
+  geom_polygon(data = al_nonatlas_grf_map, aes(x=long, y=lat, fill= richness, group=group)) +
+  geom_polygon(data = negal.df, aes(x=long, y=lat, group = group), fill = 'White') +
+  geom_path(data = map_al.df, aes(x=long, y=lat, group=group)) +
+  geom_path(data = negal.df, aes(x=long, y=lat, group=group)) +
+  geom_path(data = spsdf, aes(x=long, y=lat, group=group), col = 'white') +
+  scale_x_continuous(expand = c(0,0)) +
+  scale_y_continuous(expand = c(0,0)) +
+  scale_fill_gradientn(colours = c('white','coral','dark red'))   +
+  theme_bw()+
+  theme(axis.line=element_blank(),
+        axis.text.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        plot.margin=unit(c(-0.2,-0.1,-0.2,0.1), "cm"),
+        panel.background = element_blank())+
+  geom_point(data = cit, aes(x = lon,y = lat ),size = 6, shape = 15, show.legend = F) +
+  coord_map()
+
+
+logest <- lm(al_nonatlas_grf$richness ~ log(al_nonatlas_grf$lists))
+
+plot(al_nonatlas_grf$lists, al_nonatlas_grf$richness)
+lines(sort(al_nonatlas_grf$lists), sort(predict(logest)), col = 'red')
+
+```
