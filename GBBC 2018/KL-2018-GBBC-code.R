@@ -134,11 +134,11 @@ gridlists1$list <- cut(gridlists1$layer,c(0,10,50,100,500,1000))
 
 sprastmap <- kl.basemap + 
   geom_polygon(data = fortify(kl),aes(x = long, y = lat, group = group), fill = 'white')+
-  geom_tile(data = gridlists1, aes(x=x,y=y, fill = list), col = 'black') +
+  geom_tile(data = gridlists1, aes(x=x,y=y, fill = list), col = 'black', lwd = 1) +
   scale_fill_manual(values =  mycols2, name = 'Lists\n', breaks = c(NA,levels(gridlists1$list)),labels = c('  0','  <10','  20-50','  50-100','  100-500','  >500'))+
   geom_polygon(data = fortify(klneg),aes(x = long, y = lat, group = group), fill = 'white')+
   geom_path(data = fortify(kl), aes(x = long,y = lat, group = group), lwd = .8) +
-  theme(legend.key.size = unit(1.5,'lines'),legend.title = element_text(size = 20), legend.text = element_text(size = 12))
+  theme(legend.key.size = unit(1.5,'lines'),legend.title = element_text(size = 20), legend.text = element_text(size = 12), plot.background = element_rect(fill = 'transparent',colour  = NA), panel.background = element_rect(fill = 'transparent',colour  = NA), legend.background = element_rect(fill = 'transparent',colour  = NA))
 
 
 
@@ -177,11 +177,11 @@ richrast1$species <- cut(richrast1$layer,c(0,25,50,75,100,125,150,200))
 
 sprastmap1 <- kl.basemap + 
   geom_polygon(data = fortify(kl),aes(x = long, y = lat, group = group), fill = 'white')+
-  geom_tile(data = richrast1, aes(x=x,y=y, fill = species), col = 'black') +
+  geom_tile(data = richrast1, aes(x=x,y=y, fill = species), col = 'black', lwd = 1) +
   scale_fill_brewer(palette = 'Reds', labels = c('  Insufficient data','  <25','  25-50','  50-75','  75-100','  100-125','  125-150','  >150'), name = 'Species\n', breaks = c(NA,levels(richrast1$species)))+
   geom_polygon(data = fortify(klneg),aes(x = long, y = lat, group = group), fill = 'white')+
   geom_path(data = fortify(kl), aes(x = long,y = lat, group = group), lwd = .8) + 
-  theme(legend.key.size = unit(1.5,'lines'),legend.title = element_text(size = 20), legend.text = element_text(size = 12))
+  theme(legend.key.size = unit(1.5,'lines'),legend.title = element_text(size = 20), legend.text = element_text(size = 12), plot.background = element_rect(fill = 'transparent',colour  = NA), panel.background = element_rect(fill = 'transparent',colour  = NA), legend.background = element_rect(fill = 'transparent',colour  = NA))
 
 
 
@@ -201,10 +201,13 @@ plot(spleg)
 plot(lsleg)
 
 
-png('species_legend.png',width = 400,height = 700,res = 200)
+png('species_legend_transparent.png',width = 400,height = 700,res = 200, bg = 'transparent')
 plot(spleg)
 dev.off()
 
-png('list_legend.png',width = 400,height = 700,res = 200)
+png('list_legend_transparent.png',width = 400,height = 700,res = 200, bg = 'transparent')
 plot(lsleg)
 dev.off()
+
+ggsave('list_legend_transparent.png',lsleg,bg = 'transparent',)
+ggsave('species_legend_transparent.png',spleg,bg = 'transparent')
